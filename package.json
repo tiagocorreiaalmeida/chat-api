@@ -1,0 +1,48 @@
+{
+  "name": "chat-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "env-cmd ts-node-dev --respawn src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiagocorreiaalmeida/chat-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiagocorreiaalmeida/chat-api/issues"
+  },
+  "homepage": "https://github.com/tiagocorreiaalmeida/chat-api#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.9.14",
+    "bcryptjs": "^2.4.3",
+    "class-validator": "^0.11.0",
+    "env-cmd": "^10.0.1",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "http": "0.0.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^0.17.5",
+    "typeorm": "^0.2.21"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.20",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.5.4",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.3"
+  }
+}
