@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  api:
+    volumes:
+      - ./:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+    environment:
+      - NODE_ENV=DEV
