@@ -4,6 +4,6 @@ import { Resolver, Query } from 'type-graphql';
 export class MeResolver {
   @Query(() => String)
   me(): string {
-    return 'hey';
+    return '333hey';
   }
 }

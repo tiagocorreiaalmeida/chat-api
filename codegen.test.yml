@@ -1,0 +1,9 @@
+overwrite: true
+schema: 'http://192.168.99.100:4000/graphql'
+documents: 'src/modules/**/__tests__/operations/*.graphql'
+generates:
+  src/generated/sdk.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-graphql-request'

@@ -1,0 +1,4 @@
+export enum RedisPrefixes {
+  CONFIRM_USER = 'CONFIRM_USER',
+  FORGOT_PASSWORD = 'FORGOT_PASSWORD',
+}

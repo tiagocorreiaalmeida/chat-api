@@ -1,14 +1,21 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "target": "ES6",
     "moduleResolution": "node",
-    "module": "commonjs",
-    "sourceMap": true,
+    "module": "CommonJS",
     "rootDir": "./src",
     "outDir": "./dist",
     "lib": ["ES2016", "ESNext.AsyncIterable"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "paths": {
+      "#Modules/*": ["./modules/*"],
+      "#Utils/*": ["./utils/*"],
+      "#Base/*": ["./*"]
+    }
   }
 }
