@@ -6,7 +6,7 @@ services:
     ports:
       - ${PORT}:${PORT}
     environment:
-      - NODE_ENV=PROD
+      - NODE_ENV
       - PORT
     links:
       - postgres
@@ -16,6 +16,9 @@ services:
     image: postgres
     ports:
       - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
     volumes:
       - postgresdata:/data/db
 

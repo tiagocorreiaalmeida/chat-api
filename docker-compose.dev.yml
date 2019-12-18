@@ -2,8 +2,9 @@ version: '3'
 
 services:
   api:
+    restart: always
     volumes:
-      - ./:/usr/src/app
+      - ./:/usr/src/app:delegated
       - ./node_modules:/usr/src/app/node_modules
     environment:
       - NODE_ENV=DEV

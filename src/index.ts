@@ -4,9 +4,12 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
 import createSchema from './utils/createSchema';
+import createDatabaseConnection from './utils/createDatabaseConnection';
 
 const isDev = process.env.NODE_ENV === 'DEV';
 const { PORT = 4000 } = process.env;
+
+console.log('TEST PORT RELOAD ', PORT);
 
 const apolloConfigurations = {
   playground: isDev,
@@ -15,6 +18,8 @@ const apolloConfigurations = {
 };
 
 const mainInit = async (): Promise<void> => {
+  await createDatabaseConnection();
+
   const schema = await createSchema();
   const app = express();
   const httpServer = http.createServer(app);
