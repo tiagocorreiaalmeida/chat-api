@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn src/index.ts",
     "generate-sdk": "npx graphql-codegen -c codegen.test.yml",
-    "test": "mocha --recursive -r ts-node/register -r tsconfig-paths/register src/modules/**/__tests__/*.ts",
+    "test": "mocha --recursive -r ts-node/register -r tsconfig-paths/register src/modules/**/__tests__/*.ts --exit",
     "build": "rm -rf dist && tsc",
     "start": "node -r tsconfig-paths/register ./dist/index.js"
   },
