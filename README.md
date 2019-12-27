@@ -1,5 +1,7 @@
 # Chat API
 
+[![Build Status](https://travis-ci.org/tiagocorreiaalmeida/chat-api.svg?branch=master)](https://travis-ci.org/tiagocorreiaalmeida/chat-api)
+
 ## Run the application
 
 ### For Production
