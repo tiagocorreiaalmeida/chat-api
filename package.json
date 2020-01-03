@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn src/index.ts",
     "generate-sdk": "npx graphql-codegen -c codegen.test.yml",
-    "test": "mocha --recursive -r ts-node/register -r tsconfig-paths/register src/modules/**/__tests__/*.ts --exit",
+    "test": "mocha --recursive -r ts-node/register -r tsconfig-paths/register src/modules/**/__tests__/index.ts --exit",
     "build": "rm -rf dist && tsc",
     "start": "node -r tsconfig-paths/register ./dist/index.js"
   },
@@ -28,6 +28,7 @@
     "graphql": "^14.5.8",
     "http": "0.0.0",
     "ioredis": "^4.14.1",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "nodemailer": "^6.4.2",
     "pg": "^7.15.0",
@@ -50,6 +51,7 @@
     "@types/faker": "^4.1.8",
     "@types/hapi__joi": "^16.0.4",
     "@types/ioredis": "^4.14.3",
+    "@types/jsonwebtoken": "^8.3.5",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.20",
     "@types/nodemailer": "^6.4.0",

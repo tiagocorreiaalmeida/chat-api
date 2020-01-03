@@ -9,15 +9,15 @@ import redis from '#Base/config/redisConnection';
 
 const server = TestServer.getInstance();
 
-describe('#User', function() {
-  this.timeout(30000);
+describe('#ConfirmUser', function() {
+  this.timeout(15000);
+
   let sdkClient: SdkClient;
   let registeredUserId: string;
   let confirmUserTokenRedisKey: string;
   let confirmUserToken: string;
 
   before(async () => {
-    await server.start();
     sdkClient = await server.getSdkClient();
 
     const userData = {
@@ -34,43 +34,41 @@ describe('#User', function() {
     confirmUserToken = token;
   });
 
-  describe('#Mutation__ConfirmUser', () => {
-    it('should refuse an invalid token', async () => {
-      let error, response!: ConfirmUserMutation;
+  it('should refuse an invalid token', async () => {
+    let error, response!: ConfirmUserMutation;
 
-      try {
-        response = await sdkClient.confirmUser({
-          token: '12345',
-        });
-      } catch (e) {
-        error = e;
-      }
+    try {
+      response = await sdkClient.confirmUser({
+        token: '12345',
+      });
+    } catch (e) {
+      error = e;
+    }
 
-      expect(error).to.be.undefined;
-      expect(response.confirmUser).to.be.false;
-    });
+    expect(error).to.be.undefined;
+    expect(response.confirmUser).to.be.false;
+  });
 
-    it('should confirm the user', async () => {
-      let error, response!: ConfirmUserMutation;
+  it('should confirm the user', async () => {
+    let error, response!: ConfirmUserMutation;
 
-      try {
-        response = await sdkClient.confirmUser({
-          token: confirmUserToken,
-        });
-      } catch (e) {
-        error = e;
-      }
+    try {
+      response = await sdkClient.confirmUser({
+        token: confirmUserToken,
+      });
+    } catch (e) {
+      error = e;
+    }
 
-      expect(error).to.be.undefined;
-      expect(response.confirmUser).to.be.true;
+    expect(error).to.be.undefined;
+    expect(response.confirmUser).to.be.true;
 
-      //ensure user has active value on the database
-      const user = await User.findOne({ id: registeredUserId });
-      expect(user?.isActive).to.be.true;
+    //ensure user has active value on the database
+    const user = await User.findOne({ id: registeredUserId });
+    expect(user?.isActive).to.be.true;
 
-      //ensure key was deleted from redis
-      const redisKey = await redis.get(confirmUserTokenRedisKey);
-      expect(!!redisKey).to.be.false;
-    });
+    //ensure key was deleted from redis
+    const redisKey = await redis.get(confirmUserTokenRedisKey);
+    expect(!!redisKey).to.be.false;
   });
 });

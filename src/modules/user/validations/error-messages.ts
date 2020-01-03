@@ -6,7 +6,7 @@ export const userErrorMessages = {
   duplicatedUsername: 'The username you provided is already in use.',
   authenticationFailed: 'Login failed, please verify your credentials!',
   accountInactive: 'Please activate your account before login!',
-  notAuthenticatedError: 'Please login first.',
+  authenticationMissing: 'Please login first.',
   refreshTokenFailed: "Couldn't refresh the token provided",
   userNotFound: 'User not found, please validate the provided data.',
 };

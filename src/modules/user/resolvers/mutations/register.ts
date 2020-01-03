@@ -1,11 +1,11 @@
 import { Resolver, Mutation, InputType, Field, Arg } from 'type-graphql';
+import { UserInputError } from 'apollo-server-express';
 
 import { User } from '#Modules/user/models';
 import { encryptContent, sendEmail } from '#Utils/index';
 import { createConfirmationUrl, confirmUserTemplate } from '#Modules/user/utils';
 import { userRegisterValidation, userErrorMessages } from '#Modules/user/validations';
 import { validateUserInput } from '#Base/utils';
-import { UserInputError } from 'apollo-server-express';
 
 @InputType()
 class RegisterUserInput implements Partial<User> {
