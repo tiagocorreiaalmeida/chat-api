@@ -26,7 +26,7 @@ describe('#User', function() {
     it('should refuse an invalid email', async () => {
       let error, response;
       try {
-        response = await sdkClient.Register({
+        response = await sdkClient.register({
           data: {
             ...userData,
             email: 'fakeemail',
@@ -43,7 +43,7 @@ describe('#User', function() {
     it('should refuse an invalid password', async () => {
       let error, response;
       try {
-        response = await sdkClient.Register({
+        response = await sdkClient.register({
           data: {
             ...userData,
             password: '1',
@@ -60,7 +60,7 @@ describe('#User', function() {
       let error, response;
 
       try {
-        response = await sdkClient.Register({
+        response = await sdkClient.register({
           data: {
             ...userData,
             username: '1',
@@ -77,7 +77,7 @@ describe('#User', function() {
       let error, response!: RegisterMutation;
 
       try {
-        response = await sdkClient.Register({
+        response = await sdkClient.register({
           data: {
             ...userData,
           },
@@ -99,7 +99,7 @@ describe('#User', function() {
       let error, response!: RegisterMutation;
 
       try {
-        response = await sdkClient.Register({
+        response = await sdkClient.register({
           data: {
             ...userData,
             email: 'aaaa@gmail.com',
@@ -117,7 +117,7 @@ describe('#User', function() {
       let error, response!: RegisterMutation;
 
       try {
-        response = await sdkClient.Register({
+        response = await sdkClient.register({
           data: {
             ...userData,
             username: '12345',

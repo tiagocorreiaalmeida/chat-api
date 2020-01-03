@@ -1,6 +1,6 @@
 import smtpTransport from '../config/nodemailer';
 
-const isProd = process.env.NODE_ENV === 'PROD';
+const isProd = process.env.NODE_ENV !== 'TEST';
 
 export const sendEmail = async (
   to: string,

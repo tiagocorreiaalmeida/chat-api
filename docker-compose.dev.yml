@@ -8,3 +8,11 @@ services:
     environment:
       - NODE_ENV=DEV
     command: npm run dev
+  redis-commander:
+    image: rediscommander/redis-commander
+    ports:
+      - 8081:8081
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}

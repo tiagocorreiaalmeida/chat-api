@@ -27,14 +27,14 @@ const setUsername = joi.object().keys({
     .string()
     .trim()
     .min(4)
-    .max(100)
+    .max(50)
     .required()
     .label(userErrorMessages.invalidUsername),
 });
 
 const userRegisterValidation = mergeJoiSchemas([
-  setUsername,
   setEmailValidation,
+  setUsername,
   setPasswordValidation,
 ]);
 
