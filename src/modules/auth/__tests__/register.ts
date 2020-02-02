@@ -3,7 +3,7 @@ import faker from 'faker';
 
 import { SdkClient, getErrorMessage, TestServer } from '#Base/test-utils';
 import { RegisterMutation } from '#Base/generated/sdk';
-import { userErrorMessages } from '#Modules/user/validations';
+import { userErrorMessages } from '../utils';
 
 const server = TestServer.getInstance();
 

@@ -1,4 +1,4 @@
-mutation register($data: RegisterUserInput!) {
+mutation register($data: RegisterInput!) {
   register(data: $data) {
     id
     username

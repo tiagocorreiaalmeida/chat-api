@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { createServer, Server } from 'http';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-
-import createSchema from './config/createSchema';
-import createDbConnection from './config/createDbConnection';
 import { GraphQLFormattedError } from 'graphql';
+
+import createDbConnection from './config/createDbConnection';
+import { AppModule } from '#Modules/app';
 
 const isProd = process.env.NODE_ENV === 'PROD';
 const { PORT = 4000 } = process.env;
@@ -16,11 +16,12 @@ const apolloConfigurations = {
   debug: isProd,
 };
 
+const { schema } = AppModule.forRoot({});
+
 export const startServer = (): Promise<Server> =>
   new Promise<Server>(async (resolve) => {
     await createDbConnection();
 
-    const schema = await createSchema();
     const app = express();
 
     const apolloServer = new ApolloServer({

@@ -1,0 +1,25 @@
+type Mutation {
+  login(data: LoginInput!): LoginPayload!
+  register(data: RegisterInput!): User!
+  confirm(data: ConfirmInput!): Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+input ConfirmInput {
+  token: String!
+}
+
+type LoginPayload {
+  user: User!
+  tokens: Tokens!
+}

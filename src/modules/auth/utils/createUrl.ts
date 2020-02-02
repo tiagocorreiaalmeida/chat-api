@@ -13,5 +13,3 @@ export const createConfirmationUrl = async (userId: string): Promise<string> => 
 
   return `http://localhost:3000/user/confirm/${token}`;
 };
-
-export const createForgotPasswordUrl = async () => {};
