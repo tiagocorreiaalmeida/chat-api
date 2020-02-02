@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import faker from 'faker';
 
 import { SdkClient, TestServer } from '#Base/test-utils';
-import { ConfirmUserMutation } from '#Base/generated/sdk';
+import { ConfirmMutation } from '#Base/generated/sdk';
 import { registerUser, getConfirmationTokenAndKey } from './utils';
-import { User } from '../models';
+import { User } from '#Modules/user/models';
 import redis from '#Base/config/redisConnection';
 
 const server = TestServer.getInstance();
@@ -35,33 +35,33 @@ describe('#ConfirmUser', function() {
   });
 
   it('should refuse an invalid token', async () => {
-    let error, response!: ConfirmUserMutation;
+    let error, response!: ConfirmMutation;
 
     try {
-      response = await sdkClient.confirmUser({
-        token: '12345',
+      response = await sdkClient.confirm({
+        data: { token: '12345' },
       });
     } catch (e) {
       error = e;
     }
 
     expect(error).to.be.undefined;
-    expect(response.confirmUser).to.be.false;
+    expect(response.confirm).to.be.false;
   });
 
   it('should confirm the user', async () => {
-    let error, response!: ConfirmUserMutation;
+    let error, response!: ConfirmMutation;
 
     try {
-      response = await sdkClient.confirmUser({
-        token: confirmUserToken,
+      response = await sdkClient.confirm({
+        data: { token: confirmUserToken },
       });
     } catch (e) {
       error = e;
     }
 
     expect(error).to.be.undefined;
-    expect(response.confirmUser).to.be.true;
+    expect(response.confirm).to.be.true;
 
     //ensure user has active value on the database
     const user = await User.findOne({ id: registeredUserId });

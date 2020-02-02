@@ -1,6 +1,9 @@
 overwrite: true
-schema: 'http://192.168.99.100:4000/graphql'
+schema: ./src/schema.ts
 documents: 'src/modules/**/__tests__/operations/*.graphql'
+require:
+  - ts-node/register/transpile-only
+  - tsconfig-paths/register
 generates:
   src/generated/sdk.ts:
     plugins:

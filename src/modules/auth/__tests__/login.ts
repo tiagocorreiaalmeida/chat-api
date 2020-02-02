@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import faker from 'faker';
 
 import { SdkClient, getErrorMessage, TestServer } from '#Base/test-utils';
-import { LoginMutation, User } from '#Base/generated/sdk';
-import { userErrorMessages } from '#Modules/user/validations';
+import { LoginMutation } from '#Base/generated/sdk';
+import { userErrorMessages } from '../utils';
 import { registerUser, confirmUser } from './utils';
 
 const server = TestServer.getInstance();

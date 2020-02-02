@@ -9,53 +9,56 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
-  DateTime: any,
+  Date: any,
+};
+
+export type ConfirmInput = {
+  token: Scalars['String'],
 };
 
 
-export type LoginUserInput = {
+export type LoginInput = {
   email: Scalars['String'],
   password: Scalars['String'],
 };
 
-export type LoginUserPayload = {
-   __typename?: 'LoginUserPayload',
+export type LoginPayload = {
+   __typename?: 'LoginPayload',
   user: User,
   tokens: Tokens,
 };
 
 export type Mutation = {
    __typename?: 'Mutation',
-  confirmUser: Scalars['Boolean'],
-  login: LoginUserPayload,
+  login: LoginPayload,
   register: User,
-};
-
-
-export type MutationConfirmUserArgs = {
-  token: Scalars['String']
+  confirm: Scalars['Boolean'],
 };
 
 
 export type MutationLoginArgs = {
-  data: LoginUserInput
+  data: LoginInput
 };
 
 
 export type MutationRegisterArgs = {
-  data: RegisterUserInput
+  data: RegisterInput
+};
+
+
+export type MutationConfirmArgs = {
+  data: ConfirmInput
 };
 
 export type Query = {
    __typename?: 'Query',
-  me: Scalars['String'],
+  test: Scalars['String'],
 };
 
-export type RegisterUserInput = {
-  username: Scalars['String'],
+export type RegisterInput = {
   email: Scalars['String'],
   password: Scalars['String'],
+  username: Scalars['String'],
 };
 
 export type Tokens = {
@@ -70,30 +73,30 @@ export type User = {
   username: Scalars['String'],
   email: Scalars['String'],
   isActive: Scalars['Boolean'],
-  createdAt: Scalars['DateTime'],
-  updatedAt: Scalars['DateTime'],
-  lastSeen?: Maybe<Scalars['DateTime']>,
+  createdAt: Scalars['Date'],
+  updatedAt: Scalars['Date'],
+  lastSeen?: Maybe<Scalars['Date']>,
 };
 
-export type ConfirmUserMutationVariables = {
-  token: Scalars['String']
+export type ConfirmMutationVariables = {
+  data: ConfirmInput
 };
 
 
-export type ConfirmUserMutation = (
+export type ConfirmMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'confirmUser'>
+  & Pick<Mutation, 'confirm'>
 );
 
 export type LoginMutationVariables = {
-  data: LoginUserInput
+  data: LoginInput
 };
 
 
 export type LoginMutation = (
   { __typename?: 'Mutation' }
   & { login: (
-    { __typename?: 'LoginUserPayload' }
+    { __typename?: 'LoginPayload' }
     & { user: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'username' | 'email' | 'isActive' | 'createdAt' | 'updatedAt' | 'lastSeen'>
@@ -105,7 +108,7 @@ export type LoginMutation = (
 );
 
 export type RegisterMutationVariables = {
-  data: RegisterUserInput
+  data: RegisterInput
 };
 
 
@@ -118,13 +121,13 @@ export type RegisterMutation = (
 );
 
 
-export const ConfirmUserDocument = gql`
-    mutation confirmUser($token: String!) {
-  confirmUser(token: $token)
+export const ConfirmDocument = gql`
+    mutation confirm($data: ConfirmInput!) {
+  confirm(data: $data)
 }
     `;
 export const LoginDocument = gql`
-    mutation login($data: LoginUserInput!) {
+    mutation login($data: LoginInput!) {
   login(data: $data) {
     user {
       id
@@ -143,7 +146,7 @@ export const LoginDocument = gql`
 }
     `;
 export const RegisterDocument = gql`
-    mutation register($data: RegisterUserInput!) {
+    mutation register($data: RegisterInput!) {
   register(data: $data) {
     id
     username
@@ -157,8 +160,8 @@ export const RegisterDocument = gql`
     `;
 export function getSdk(client: GraphQLClient) {
   return {
-    confirmUser(variables: ConfirmUserMutationVariables): Promise<ConfirmUserMutation> {
-      return client.request<ConfirmUserMutation>(print(ConfirmUserDocument), variables);
+    confirm(variables: ConfirmMutationVariables): Promise<ConfirmMutation> {
+      return client.request<ConfirmMutation>(print(ConfirmDocument), variables);
     },
     login(variables: LoginMutationVariables): Promise<LoginMutation> {
       return client.request<LoginMutation>(print(LoginDocument), variables);

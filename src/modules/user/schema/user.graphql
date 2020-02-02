@@ -1,0 +1,11 @@
+scalar Date
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  isActive: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+  lastSeen: Date
+}

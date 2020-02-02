@@ -1,5 +1,5 @@
 import redis from '#Base/config/redisConnection';
-import { RedisPrefixes } from '#Modules/user/types';
+import { RedisPrefixes } from '#Modules/auth/types';
 
 export const getConfirmationTokenAndKey = async (
   userId: string,
