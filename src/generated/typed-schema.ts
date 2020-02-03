@@ -12,8 +12,29 @@ export type Scalars = {
   Date: any,
 };
 
+export type Channel = {
+   __typename?: 'Channel',
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  isGroup: Scalars['Boolean'],
+  createdAt: Scalars['Date'],
+  updatedAt: Scalars['Date'],
+  participants: Array<Participant>,
+  messages: Array<Message>,
+};
+
 export type ConfirmInput = {
   token: Scalars['String'],
+};
+
+export type CreateChannelInput = {
+  participant: Scalars['ID'],
+  firstMessage?: Maybe<Scalars['String']>,
+};
+
+export type CreateGroupChannelInput = {
+  name: Scalars['String'],
+  participants?: Maybe<Array<Scalars['ID']>>,
 };
 
 
@@ -28,11 +49,45 @@ export type LoginPayload = {
   tokens: Tokens,
 };
 
+export type Message = {
+   __typename?: 'Message',
+  id: Scalars['String'],
+  channel: Channel,
+  sender: User,
+  type: MessageType,
+  message: Scalars['String'],
+  receivers: Array<MessageReceiver>,
+  createdAt: Scalars['Date'],
+  updatedAt?: Maybe<Scalars['Date']>,
+  deletedAt?: Maybe<Scalars['Date']>,
+};
+
+export type MessageReceiver = {
+   __typename?: 'MessageReceiver',
+  user: User,
+  message: Message,
+  status: MessageReceiverStatus,
+};
+
+export enum MessageReceiverStatus {
+  Sent = 'SENT',
+  Delivered = 'DELIVERED',
+  Received = 'RECEIVED',
+  Readed = 'READED'
+}
+
+export enum MessageType {
+  System = 'SYSTEM',
+  Text = 'TEXT'
+}
+
 export type Mutation = {
    __typename?: 'Mutation',
   login: LoginPayload,
   register: User,
   confirm: Scalars['Boolean'],
+  createChannel: Channel,
+  createGroupChannel: Channel,
 };
 
 
@@ -49,6 +104,29 @@ export type MutationRegisterArgs = {
 export type MutationConfirmArgs = {
   data: ConfirmInput
 };
+
+
+export type MutationCreateChannelArgs = {
+  data: CreateChannelInput
+};
+
+
+export type MutationCreateGroupChannelArgs = {
+  data: CreateGroupChannelInput
+};
+
+export type Participant = {
+   __typename?: 'Participant',
+  user: User,
+  channel: Channel,
+  joinedAt: Scalars['Date'],
+  type: ParticipantType,
+};
+
+export enum ParticipantType {
+  Admin = 'ADMIN',
+  Member = 'MEMBER'
+}
 
 export type Query = {
    __typename?: 'Query',
@@ -163,6 +241,15 @@ export type ResolversTypes = {
   Tokens: ResolverTypeWrapper<Tokens>,
   RegisterInput: RegisterInput,
   ConfirmInput: ConfirmInput,
+  CreateChannelInput: CreateChannelInput,
+  Channel: ResolverTypeWrapper<Channel>,
+  Participant: ResolverTypeWrapper<Participant>,
+  ParticipantType: ParticipantType,
+  Message: ResolverTypeWrapper<Message>,
+  MessageType: MessageType,
+  MessageReceiver: ResolverTypeWrapper<MessageReceiver>,
+  MessageReceiverStatus: MessageReceiverStatus,
+  CreateGroupChannelInput: CreateGroupChannelInput,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -179,6 +266,26 @@ export type ResolversParentTypes = {
   Tokens: Tokens,
   RegisterInput: RegisterInput,
   ConfirmInput: ConfirmInput,
+  CreateChannelInput: CreateChannelInput,
+  Channel: Channel,
+  Participant: Participant,
+  ParticipantType: ParticipantType,
+  Message: Message,
+  MessageType: MessageType,
+  MessageReceiver: MessageReceiver,
+  MessageReceiverStatus: MessageReceiverStatus,
+  CreateGroupChannelInput: CreateGroupChannelInput,
+};
+
+export type ChannelResolvers<ContextType = ModuleContext, ParentType extends ResolversParentTypes['Channel'] = ResolversParentTypes['Channel']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  isGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  participants?: Resolver<Array<ResolversTypes['Participant']>, ParentType, ContextType>,
+  messages?: Resolver<Array<ResolversTypes['Message']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn,
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -191,10 +298,40 @@ export type LoginPayloadResolvers<ContextType = ModuleContext, ParentType extend
   __isTypeOf?: isTypeOfResolverFn,
 };
 
+export type MessageResolvers<ContextType = ModuleContext, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  channel?: Resolver<ResolversTypes['Channel'], ParentType, ContextType>,
+  sender?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  type?: Resolver<ResolversTypes['MessageType'], ParentType, ContextType>,
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  receivers?: Resolver<Array<ResolversTypes['MessageReceiver']>, ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  updatedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>,
+  deletedAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn,
+};
+
+export type MessageReceiverResolvers<ContextType = ModuleContext, ParentType extends ResolversParentTypes['MessageReceiver'] = ResolversParentTypes['MessageReceiver']> = {
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  message?: Resolver<ResolversTypes['Message'], ParentType, ContextType>,
+  status?: Resolver<ResolversTypes['MessageReceiverStatus'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn,
+};
+
 export type MutationResolvers<ContextType = ModuleContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   login?: Resolver<ResolversTypes['LoginPayload'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'data'>>,
   register?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'data'>>,
   confirm?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationConfirmArgs, 'data'>>,
+  createChannel?: Resolver<ResolversTypes['Channel'], ParentType, ContextType, RequireFields<MutationCreateChannelArgs, 'data'>>,
+  createGroupChannel?: Resolver<ResolversTypes['Channel'], ParentType, ContextType, RequireFields<MutationCreateGroupChannelArgs, 'data'>>,
+};
+
+export type ParticipantResolvers<ContextType = ModuleContext, ParentType extends ResolversParentTypes['Participant'] = ResolversParentTypes['Participant']> = {
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  channel?: Resolver<ResolversTypes['Channel'], ParentType, ContextType>,
+  joinedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>,
+  type?: Resolver<ResolversTypes['ParticipantType'], ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn,
 };
 
 export type QueryResolvers<ContextType = ModuleContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -219,9 +356,13 @@ export type UserResolvers<ContextType = ModuleContext, ParentType extends Resolv
 };
 
 export type Resolvers<ContextType = ModuleContext> = {
+  Channel?: ChannelResolvers<ContextType>,
   Date?: GraphQLScalarType,
   LoginPayload?: LoginPayloadResolvers<ContextType>,
+  Message?: MessageResolvers<ContextType>,
+  MessageReceiver?: MessageReceiverResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
+  Participant?: ParticipantResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Tokens?: TokensResolvers<ContextType>,
   User?: UserResolvers<ContextType>,

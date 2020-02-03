@@ -1,0 +1,12 @@
+enum MessageReceiverStatus {
+  SENT
+  DELIVERED
+  RECEIVED
+  READED
+}
+
+type MessageReceiver {
+  user: User!
+  message: Message!
+  status: MessageReceiverStatus!
+}

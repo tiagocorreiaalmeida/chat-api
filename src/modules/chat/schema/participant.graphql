@@ -1,0 +1,11 @@
+enum ParticipantType {
+  ADMIN
+  MEMBER
+}
+
+type Participant {
+  user: User!
+  channel: Channel!
+  joinedAt: Date!
+  type: ParticipantType!
+}

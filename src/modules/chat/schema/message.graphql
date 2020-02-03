@@ -1,0 +1,16 @@
+enum MessageType {
+  SYSTEM
+  TEXT
+}
+
+type Message {
+  id: String!
+  channel: Channel!
+  sender: User!
+  type: MessageType!
+  message: String!
+  receivers: [MessageReceiver!]!
+  createdAt: Date!
+  updatedAt: Date
+  deletedAt: Date
+}

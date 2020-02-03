@@ -1,0 +1,14 @@
+type Mutation {
+  createChannel(data: CreateChannelInput!): Channel!
+  createGroupChannel(data: CreateGroupChannelInput!): Channel!
+}
+
+input CreateGroupChannelInput {
+  name: String!
+  participants: [ID!]
+}
+
+input CreateChannelInput {
+  participant: ID!
+  firstMessage: String
+}

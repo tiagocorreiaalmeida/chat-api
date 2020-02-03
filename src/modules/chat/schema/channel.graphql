@@ -1,0 +1,9 @@
+type Channel {
+  id: ID!
+  name: String!
+  isGroup: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+  participants: [Participant!]!
+  messages: [Message!]!
+}
