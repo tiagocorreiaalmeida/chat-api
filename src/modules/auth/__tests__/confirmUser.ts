@@ -4,7 +4,7 @@ import faker from 'faker';
 import { SdkClient, TestServer } from '#Base/test-utils';
 import { ConfirmMutation } from '#Base/generated/sdk';
 import { registerUser, getConfirmationTokenAndKey } from './utils';
-import { User } from '#Modules/user/models';
+import prisma from '#Base/prisma';
 import redis from '#Base/config/redisConnection';
 
 const server = TestServer.getInstance();
@@ -64,7 +64,7 @@ describe('#ConfirmUser', function() {
     expect(response.confirm).to.be.true;
 
     //ensure user has active value on the database
-    const user = await User.findOne({ id: registeredUserId });
+    const user = await prisma.user.findOne({ where: { id: registeredUserId } });
     expect(user?.isActive).to.be.true;
 
     //ensure key was deleted from redis

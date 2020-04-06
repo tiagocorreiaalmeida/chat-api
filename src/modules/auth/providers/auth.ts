@@ -3,11 +3,11 @@ import { Injectable } from '@graphql-modules/di';
 import { AuthenticationError } from 'apollo-server-express';
 import bcrypt from 'bcryptjs';
 
+import prisma from '#Base/prisma';
 import { createConfirmationUrl, confirmUserTemplate } from '../utils';
 import { userRegisterValidation, userErrorMessages, generateAuthTokens } from '../utils';
 import { RedisPrefixes } from '../types';
 import redis from '#Base/config/redisConnection';
-import { User } from '#Modules/user/models';
 import { encryptContent, sendEmail } from '#Utils/index';
 import { validateUserInput } from '#Base/utils';
 import {
@@ -25,7 +25,11 @@ export class AuthProvider {
 
     const { email, password, username } = data;
 
-    const userExists = await User.findOne({ where: [{ email }, { username }] });
+    const [userExists] = await prisma.user.findMany({
+      where: { AND: [{ username }, { email }] },
+      first: 1,
+    });
+
     if (userExists) {
       const duplicatedUserError =
         userExists.email === email
@@ -35,11 +39,9 @@ export class AuthProvider {
       throw new UserInputError(duplicatedUserError);
     }
 
-    const user = await User.create({
-      email,
-      username,
-      password: encryptContent(password),
-    }).save();
+    const user = await prisma.user.create({
+      data: { email, username, password: encryptContent(password) },
+    });
 
     const confirmationUrl = await createConfirmationUrl(user.id);
     await sendEmail(user.email, 'Account confirmation', confirmUserTemplate(confirmationUrl));
@@ -50,7 +52,8 @@ export class AuthProvider {
   async login(data: LoginInput): Promise<LoginPayload> {
     const { email, password } = data;
 
-    const user = await User.findOne({ email });
+    const user = await prisma.user.findOne({ where: { email } });
+
     if (user && !user.isActive) {
       throw new AuthenticationError(userErrorMessages.accountInactive);
     } else if (!user || (user && !bcrypt.compareSync(password, user.password))) {
@@ -74,7 +77,7 @@ export class AuthProvider {
       return false;
     }
 
-    await User.update({ id: userId }, { isActive: true });
+    await prisma.user.update({ where: { id: userId }, data: { isActive: true } });
     await redis.del(redisKey);
 
     return true;
